@@ -14,11 +14,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-/* set Cors */
+// Cors for cross origin allowance
 const cors = require('cors');
 app.use(cors());
 
-// Cors for cross origin allowance
 
 // Initialize the main project folder
 app.use(express.static('website'));
