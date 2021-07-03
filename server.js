@@ -30,3 +30,15 @@ const server = app.listen(port, listening);
 function listening() {
     console.log(`running on localhost: ${port}`);
 }
+
+
+// GET Route
+projectData['x'] = 'y';
+
+
+let sendData = (req, res) => {
+    res.send(projectData);
+}
+
+app.get('/all', sendData);
+
