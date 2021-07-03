@@ -42,11 +42,6 @@ app.get('/all', sendData);
 
 // POST Route
 const addWeather = (req, res) => {
-    // const newEntry = {
-    //     temperature: req.body.temperature,
-    //     date: req.body.date,
-    //     response: req.body.response
-    // }
     projectData['temperature'] = req.body.temperature;
     projectData['date'] = req.body.date;
     projectData['response'] = req.body.response
