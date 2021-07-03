@@ -4,7 +4,7 @@ const apiKey = '&appid=03aac2c9ce137a6ff101afe37adf3c15';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 
 
 
@@ -25,12 +25,11 @@ const performAction = (event) => {
     const zip = document.getElementById('zip').value;
     console.log('zip', zip)
     const response = document.getElementById('feelings').value;
-    const today = new Date();
     getWeather(baseURL + zip + apiKey)
     .then(data => {
         const postData = {
             temperature: data.main.temp,
-            date: today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate(),
+            date: newDate,
             response: response
         };
         postWeather('/addWeather', postData);
