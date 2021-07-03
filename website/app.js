@@ -8,15 +8,43 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
 // Get project data
-const getProjectData = async (url) => {
+const getProjectData = async (url='') => {
     const res = await fetch(url);
     try {
-        const projectData = await res.json();
-        console.log(projectData);
-        return projectData;
+        const newData = await res.json();
+        console.log(newData);
+        return newData;
     } catch (error) {
         console.log('error', error);
     }
 }
 
 getProjectData('/all');
+
+
+// Post weather data
+const postWeather = async (url='', data={}) => {
+    const res = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
+
+    try {
+        const newData = await res.json();
+        console.log(newData);
+        return newData;
+    } catch (error) {
+        console.log('error', error);
+    }
+}
+
+
+postWeather('/addWeather', {
+    temperature: 25.6,
+    date: '2021-06-30',
+    response: 'raily day'
+})
