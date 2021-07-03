@@ -21,7 +21,7 @@ const getWeather = async (url='') => {
 }
 
 
-const generateCallback = (event) => {
+const performAction = (event) => {
     const zip = document.getElementById('zip').value;
     console.log('zip', zip)
     const response = document.getElementById('feelings').value;
@@ -34,12 +34,29 @@ const generateCallback = (event) => {
             response: response
         };
         postWeather('/addWeather', postData);
+    })
+    .then(() => {
+        updateUI();
     });
 }
 
 
+const updateUI = async () => {
+    const res = await fetch('/all');
+    try{
+        const newData = await res.json();
+        console.log(newData);
+        document.getElementById('temp').innerHTML = newData.temperature;
+        document.getElementById('date').innerHTML = newData.date;
+        document.getElementById('content').innerHTML = newData.response;
+    } catch (error) {
+        console.log('error', error);
+    }
+}
+
+
 // add click event listener on generate button
-document.getElementById('generate').addEventListener('click', generateCallback);
+document.getElementById('generate').addEventListener('click', performAction);
 
 
 
