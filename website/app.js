@@ -9,9 +9,8 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
 // Get weather data
-const getWeather = async () => {
-    const zip = document.getElementById('zip').value;
-    const res = await fetch(baseURL + zip + apiKey);
+const getWeather = async (url='') => {
+    const res = await fetch(url);
     try {
         const newData = await res.json();
         console.log(newData);
@@ -21,8 +20,26 @@ const getWeather = async () => {
     }
 }
 
+
+const generateCallback = (event) => {
+    const zip = document.getElementById('zip').value;
+    console.log('zip', zip)
+    const response = document.getElementById('feelings').value;
+    const today = new Date();
+    getWeather(baseURL + zip + apiKey)
+    .then(data => {
+        const postData = {
+            temperature: data.main.temp,
+            date: today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate(),
+            response: response
+        };
+        postWeather('/addWeather', postData);
+    });
+}
+
+
 // add click event listener on generate button
-document.getElementById('generate').addEventListener('click', getWeather);
+document.getElementById('generate').addEventListener('click', generateCallback);
 
 
 
@@ -61,10 +78,10 @@ const postWeather = async (url='', data={}) => {
 }
 
 
-postWeather('/addWeather', {
-    temperature: 25.6,
-    date: '2021-06-30',
-    response: 'raily day'
-})
+// postWeather('/addWeather', {
+//     temperature: 25.6,
+//     date: '2021-06-30',
+//     response: 'raily day'
+// })
 
 getProjectData('/all');
