@@ -7,59 +7,7 @@ let d = new Date();
 let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 
 
-
-// Get weather data
-const getWeather = async (url='') => {
-    const res = await fetch(url);
-    try {
-        const newData = await res.json();
-        console.log(newData);
-        return newData;
-    } catch (error) {
-        console.log('error', error);
-    }
-}
-
-
-const performAction = (event) => {
-    const zip = document.getElementById('zip').value;
-    console.log('zip', zip)
-    const response = document.getElementById('feelings').value;
-    getWeather(baseURL + zip + apiKey)
-    .then(data => {
-        const postData = {
-            temperature: data.main.temp,
-            date: newDate,
-            response: response
-        };
-        postWeather('/addWeather', postData);
-    })
-    .then(() => {
-        updateUI();
-    });
-}
-
-
-const updateUI = async () => {
-    const res = await fetch('/all');
-    try{
-        const newData = await res.json();
-        console.log(newData);
-        document.getElementById('temp').innerHTML = newData.temperature;
-        document.getElementById('date').innerHTML = newData.date;
-        document.getElementById('content').innerHTML = newData.response;
-    } catch (error) {
-        console.log('error', error);
-    }
-}
-
-
-// add click event listener on generate button
-document.getElementById('generate').addEventListener('click', performAction);
-
-
-
-// Get project data
+// GET ROUTE: retrieve project data
 const getProjectData = async (url='') => {
     const res = await fetch(url);
     try {
@@ -71,9 +19,19 @@ const getProjectData = async (url='') => {
     }
 }
 
+// GET ROUTE: retrieve weather data
+const getWeather = async (url='') => {
+    const res = await fetch(url);
+    try {
+        const newData = await res.json();
+        console.log(newData);
+        return newData;
+    } catch (error) {
+        console.log('error', error);
+    }
+}
 
-
-// Post weather data
+// POST ROUTE: upload weather data
 const postWeather = async (url='', data={}) => {
     const res = await fetch(url, {
         method: 'POST',
@@ -94,10 +52,35 @@ const postWeather = async (url='', data={}) => {
 }
 
 
-// postWeather('/addWeather', {
-//     temperature: 25.6,
-//     date: '2021-06-30',
-//     response: 'raily day'
-// })
+// generate button callback function
+const performAction = (event) => {
+    const zip = document.getElementById('zip').value;
+    console.log('zip', zip)
+    const response = document.getElementById('feelings').value;
+    getWeather(baseURL + zip + apiKey)
+    .then(data => {
+        const postData = {
+            temperature: data.main.temp,
+            date: newDate,
+            response: response
+        };
+        postWeather('/addWeather', postData);
+    })
+    .then(() => {
+        updateUI();
+    });
+}
 
-getProjectData('/all');
+// function for update UI with fetched project data
+const updateUI = async () => {
+    getProjectData('/all')
+    .then(data => {
+        document.getElementById('temp').innerHTML = data.temperature;
+        document.getElementById('date').innerHTML = data.date;
+        document.getElementById('content').innerHTML = data.response;
+    });
+}
+
+
+// add click event listener on generate button
+document.getElementById('generate').addEventListener('click', performAction);

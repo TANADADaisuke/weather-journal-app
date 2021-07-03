@@ -35,6 +35,7 @@ function listening() {
 // GET Route
 const sendData = (req, res) => {
     res.send(projectData);
+    console.log('/all: success', projectData);
 }
 
 app.get('/all', sendData);
@@ -46,7 +47,7 @@ const addWeather = (req, res) => {
     projectData['date'] = req.body.date;
     projectData['response'] = req.body.response
     res.send(projectData);
-    console.log(projectData);
+    console.log('/addWeather: success', projectData);
 } 
 
 app.post('/addWeather', addWeather);
