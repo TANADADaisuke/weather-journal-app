@@ -1,10 +1,29 @@
 /* Global Variables */
-
-const apiKey = '03aac2c9ce137a6ff101afe37adf3c15';
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+const apiKey = '&appid=03aac2c9ce137a6ff101afe37adf3c15';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+
+
+// add click event listener on generate button
+document.getElementById('generate').addEventListener('click', event => {
+    const zip = document.getElementById('zip').value;
+    const res = getWeather(zip);
+})
+
+// Get weather data
+const getWeather = async (zip) => {
+    const res = await fetch(baseURL + zip + apiKey);
+    try {
+        const newData = await res.json();
+        console.log(newData);
+        return newData;
+    } catch (error) {
+        console.log('error', error);
+    }
+}
 
 
 // Get project data
