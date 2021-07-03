@@ -7,14 +7,10 @@ let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 
-// add click event listener on generate button
-document.getElementById('generate').addEventListener('click', event => {
-    const zip = document.getElementById('zip').value;
-    const res = getWeather(zip);
-})
 
 // Get weather data
-const getWeather = async (zip) => {
+const getWeather = async () => {
+    const zip = document.getElementById('zip').value;
     const res = await fetch(baseURL + zip + apiKey);
     try {
         const newData = await res.json();
@@ -24,6 +20,10 @@ const getWeather = async (zip) => {
         console.log('error', error);
     }
 }
+
+// add click event listener on generate button
+document.getElementById('generate').addEventListener('click', getWeather);
+
 
 
 // Get project data
