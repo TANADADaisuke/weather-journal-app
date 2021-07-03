@@ -19,7 +19,6 @@ const getProjectData = async (url='') => {
     }
 }
 
-getProjectData('/all');
 
 
 // Post weather data
@@ -48,3 +47,5 @@ postWeather('/addWeather', {
     date: '2021-06-30',
     response: 'raily day'
 })
+
+getProjectData('/all');

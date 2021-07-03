@@ -33,9 +33,6 @@ function listening() {
 
 
 // GET Route
-projectData['x'] = 'y';
-
-
 const sendData = (req, res) => {
     res.send(projectData);
 }
@@ -44,17 +41,17 @@ app.get('/all', sendData);
 
 
 // POST Route
-let weatherData = [];
-
 const addWeather = (req, res) => {
-    const newEntry = {
-        temperature: req.body.temperature,
-        date: req.body.date,
-        response: req.body.response
-    }
-    weatherData.push(newEntry);
-    res.send(weatherData);
-    console.log(weatherData);
-}
+    // const newEntry = {
+    //     temperature: req.body.temperature,
+    //     date: req.body.date,
+    //     response: req.body.response
+    // }
+    projectData['temperature'] = req.body.temperature;
+    projectData['date'] = req.body.date;
+    projectData['response'] = req.body.response
+    res.send(projectData);
+    console.log(projectData);
+} 
 
 app.post('/addWeather', addWeather);
