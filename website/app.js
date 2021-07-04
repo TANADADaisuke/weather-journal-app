@@ -59,6 +59,11 @@ const performAction = (event) => {
     const response = document.getElementById('feelings').value;
     getWeather(baseURL + zip + apiKey)
     .then(data => {
+        // catch up unexist zip code
+        if (data.cod === '404') {
+            alert('Invalid zip code. City not found.')
+            throw 'city not found';
+        }
         const postData = {
             temperature: data.main.temp,
             date: newDate,
