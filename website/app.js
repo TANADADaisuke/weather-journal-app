@@ -75,9 +75,9 @@ const performAction = (event) => {
 const updateUI = async () => {
     getProjectData('/all')
     .then(data => {
-        document.getElementById('temp').innerHTML = data.temperature;
-        document.getElementById('date').innerHTML = data.date;
-        document.getElementById('content').innerHTML = data.response;
+        document.getElementById('temp').innerHTML = '<sapn>Temp:</span> ' + data.temperature + ' &deg;C';
+        document.getElementById('date').innerHTML = '<span>Date:</span> ' + data.date;
+        document.getElementById('content').innerHTML = '<span>Your Feeling:</span> ' + data.response;
     });
 }
 
